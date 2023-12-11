@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import GridLayout from '../components/Grid';
+import GridLayout from '~/dashboard/components/Grid';
 
 const Page = () => {
   return (
