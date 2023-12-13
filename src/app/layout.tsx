@@ -1,4 +1,5 @@
 import { Theme } from '@radix-ui/themes';
+import StyledComponentsRegistry from '~/lib/registry/styled-components';
 import '@radix-ui/themes/styles.css';
 import './globals.scss';
 
@@ -26,7 +27,9 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Theme>{children}</Theme>
+        <Theme>
+          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        </Theme>
       </body>
     </html>
   );
