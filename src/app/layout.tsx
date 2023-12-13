@@ -1,5 +1,6 @@
+import { Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
-import './globals.css';
+import './globals.scss';
 
 import type { Metadata } from 'next';
 
@@ -24,7 +25,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <Theme>{children}</Theme>
+      </body>
     </html>
   );
 }

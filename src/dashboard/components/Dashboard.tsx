@@ -34,16 +34,10 @@ const Dashboard = ({
 
   return (
     <div className={classNames('flex', 'relative', 'w-full')}>
-      <div
-        className={classNames(
-          'w-full',
-          'mx-auto',
-          'ml-4',
-          'mr-[432px]',
-          'mt-2'
-        )}
-      >
-        <div className={classNames('flex', 'justify-between')}>
+      <div className={classNames('w-full', 'mr-[400px]')}>
+        <div
+          className={classNames('flex', 'justify-between', 'bg-white', 'p-2')}
+        >
           <button
             type="button"
             className={classNames(
@@ -114,11 +108,13 @@ const Dashboard = ({
             </button>
           </div>
         </div>
-        <DashboardGrid
-          isEditMode={isEditMode}
-          layoutData={layout}
-          onLayoutChange={onLayoutChange}
-        />
+        <div className={classNames('mx-auto', 'ml-4', 'mt-2', 'mr-4')}>
+          <DashboardGrid
+            isEditMode={isEditMode}
+            layoutData={layout}
+            onLayoutChange={onLayoutChange}
+          />
+        </div>
       </div>
       <Sidebar />
     </div>
