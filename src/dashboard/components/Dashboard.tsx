@@ -34,7 +34,7 @@ const Dashboard = ({
 
   return (
     <div className={classNames('flex', 'relative', 'w-full')}>
-      <div className={classNames('w-full', 'mr-[400px]')}>
+      <div className={classNames('w-full', 'mr-[25rem]')}>
         <div
           className={classNames('flex', 'justify-between', 'bg-white', 'p-2')}
         >

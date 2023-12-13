@@ -9,13 +9,7 @@ const Sidebar = () => {
     <Container>
       <h2 className={classNames('font-bold', 'text-xl')}>요소 추가하기</h2>
       <div className={classNames('mt-4')}>
-        <Card
-          className={classNames(
-            'cursor-pointer',
-            'hover:bg-[var(--gray-2)]',
-            'transition-colors'
-          )}
-        >
+        <Card className={classNames('card-container')}>
           <Text as="div" className={classNames('text-md')}>
             <Strong>샘플 요소 1</Strong>
           </Text>
@@ -34,8 +28,27 @@ const Container = styled.div`
   top: 0;
   right: 0;
   width: 25rem;
-  min-height: 75rem;
+  min-height: 1200px;
   padding: 1rem;
   background-color: white;
   border-left: 1px solid #e4e4e4;
+
+  & {
+    .card-container {
+      margin-top: 16px;
+      cursor: pointer;
+      transition-property: color, background-color, border-color,
+        text-decoration-color, fill, stroke;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+
+      &:hover {
+        background-color: var(--gray-2);
+      }
+    }
+  }
 `;
