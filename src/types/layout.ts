@@ -1,3 +1,5 @@
+export type LayoutData = Record<string, Card>;
+
 export interface Card {
   id: string;
   type: string;

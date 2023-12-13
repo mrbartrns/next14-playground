@@ -1,107 +1,49 @@
 'use client';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { ParentSize } from '@visx/responsive';
 import classNames from 'classnames';
 import GridLayout from 'react-grid-layout';
 import { styled } from 'styled-components';
-import mockData from '~/__mocks__/layout.mock';
-import storage from '~/lib/storage';
-import {
-  DASHABORD_GRID_COLUMN,
-  DASHBOARD_LAYOUT_STORAGE_KEY,
-  GRID_CARD_BORDER_RADIUS,
-} from '../constants';
+import { DASHABORD_GRID_COLUMN, GRID_CARD_BORDER_RADIUS } from '../constants';
 import ChartWrapper from './charts/ChartWrapper';
 
-function isValidLayoutType(stored: any) {
-  if (!stored) {
-    return false;
-  }
-
-  if (!Array.isArray(stored)) {
-    return false;
-  }
-
-  if (
-    Array.isArray(stored) &&
-    stored.every(
-      (item) =>
-        typeof item.x === 'number' &&
-        typeof item.y === 'number' &&
-        typeof item.i !== 'undefined' &&
-        typeof item.w === 'number' &&
-        typeof item.h === 'number'
-    )
-  ) {
-    return true;
-  }
-  return false;
+interface Props {
+  layoutData: GridLayout.Layout[];
+  onLayoutChange?: (newLayout: GridLayout.Layout[]) => void;
+  onDiscardChanges?: () => void;
+  onSaveChanges?: () => void;
 }
 
-const _layout: ReactGridLayout.Layout[] = mockData.map((data) => {
-  return {
-    i: data.id,
-    x: data.meta.startX,
-    y: data.meta.startY,
-    w: data.meta.width,
-    h: data.meta.height,
-  };
-});
-
-// 부모 넓이에 맞게 처리하기 위해서는 WidthProvider로 감싸야 함
-// const GridLayout = WidthProvider(GridLayoutContainer);
-
-// TODO - button을 추가하여 editMode에 따른 설정 추가하기
-const Layout = () => {
+const Layout = ({
+  layoutData: layout,
+  onLayoutChange,
+  onDiscardChanges,
+  onSaveChanges,
+}: Props) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [layout, setLayout] = useState<ReactGridLayout.Layout[]>([]);
 
   const discardChanges = useCallback(() => {
-    if (confirm('discard changes?')) {
-      const previousValue = storage.getItem(DASHBOARD_LAYOUT_STORAGE_KEY);
-
-      if (isValidLayoutType(previousValue)) {
-        setLayout(previousValue);
-        return;
-      }
-
-      setLayout(_layout);
-    }
-  }, []);
+    onDiscardChanges?.();
+  }, [onDiscardChanges]);
 
   const saveChanges = useCallback(() => {
-    storage.setItem(DASHBOARD_LAYOUT_STORAGE_KEY, layout);
     setIsEditMode(false);
-  }, [layout]);
+    onSaveChanges?.();
+  }, [onSaveChanges]);
 
   const handleLayoutChange = (newLayout: ReactGridLayout.Layout[]) => {
-    setLayout(newLayout);
+    onLayoutChange?.(newLayout);
   };
 
   const toggleEditMode = () => {
     setIsEditMode((prev) => !prev);
   };
 
-  const initialLize = useCallback(() => {
-    const stored = storage.getItem(DASHBOARD_LAYOUT_STORAGE_KEY);
-
-    if (isValidLayoutType(stored)) {
-      setLayout(stored);
-      return;
-    }
-
-    setLayout(_layout);
-  }, []);
-
-  useEffect(() => {
-    // layout shift를 방지하기 위해 useEffect 내에서 초기화를 진행한다.
-    initialLize();
-  }, [initialLize]);
-
   // prevent performance issue
+  // 여기에 type에 대한 정보도 우선 넣기,, 임시
   const children = useMemo(
     () =>
-      layout.map((layoutItem) => (
+      layout?.map((layoutItem) => (
         <div key={layoutItem.i} className={classNames('card')}>
           <ChartWrapper
             borderRadius={GRID_CARD_BORDER_RADIUS}
