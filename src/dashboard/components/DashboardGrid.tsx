@@ -6,14 +6,17 @@ import GridLayout from 'react-grid-layout';
 import { styled } from 'styled-components';
 import { DASHABORD_GRID_COLUMN, GRID_CARD_BORDER_RADIUS } from '../constants';
 import ChartWrapper from './charts/ChartWrapper';
+import type { ChartData } from '~t/chart';
 
 interface Props {
+  chartData: Record<string, ChartData>;
   layoutData: GridLayout.Layout[];
   isEditMode: boolean;
   onLayoutChange?: (newLayout: GridLayout.Layout[]) => void;
 }
 
 const DashboardGrid = ({
+  chartData,
   layoutData: layout,
   isEditMode,
   onLayoutChange,
@@ -26,12 +29,12 @@ const DashboardGrid = ({
         <div key={layoutItem.i} className={classNames('card')}>
           <ChartWrapper
             borderRadius={GRID_CARD_BORDER_RADIUS}
-            chartId={layoutItem.i}
+            chartId={chartData[layoutItem.i].type}
             isEditing={isEditMode}
           />
         </div>
       )),
-    [isEditMode, layout]
+    [chartData, isEditMode, layout]
   );
 
   return (

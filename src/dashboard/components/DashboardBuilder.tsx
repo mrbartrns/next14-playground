@@ -1,7 +1,9 @@
+// layout data, chart data는 서버에서 fetch할 예정
 'use client';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { produce } from 'immer';
 import mockData from '~/__mocks__/layout.mock';
+import chartData from '~/__mocks__/chartData.mock';
 import { objectEntries } from '~/lib/object';
 import storage from '~/lib/storage';
 import { DASHBOARD_LAYOUT_STORAGE_KEY } from '../constants';
@@ -9,6 +11,7 @@ import Dashboard from './Dashboard';
 import type ReactGridLayout from 'react-grid-layout';
 import type { LayoutData } from '~t/layout';
 
+// NOTE - data schema 변경 뒤 해당 함수 로직 변경 확인
 function isValidLayoutData(data: any): data is LayoutData {
   if (!data) return false;
   if (typeof data !== 'object') return false;
@@ -16,11 +19,7 @@ function isValidLayoutData(data: any): data is LayoutData {
     const _data = objectEntries(data).map(([, value]) => value);
 
     return _data.every((d) => {
-      if (
-        typeof d.id === 'undefined' ||
-        typeof d.type === 'undefined' ||
-        typeof d.meta === 'undefined'
-      )
+      if (typeof d.id === 'undefined' || typeof d.meta === 'undefined')
         return false;
 
       if (
@@ -38,7 +37,7 @@ function isValidLayoutData(data: any): data is LayoutData {
   }
 }
 
-const DashboardDataFetcher = () => {
+const DashboardBuilder = () => {
   const [layoutData, setLayoutData] = useState<LayoutData>({});
 
   const layout: ReactGridLayout.Layout[] = useMemo(() => {
@@ -102,6 +101,7 @@ const DashboardDataFetcher = () => {
 
   return (
     <Dashboard
+      chartData={chartData}
       layout={layout}
       onDiscardChanges={handleDiscardChanges}
       onLayoutChange={handleLayoutChange}
@@ -110,4 +110,4 @@ const DashboardDataFetcher = () => {
   );
 };
 
-export default DashboardDataFetcher;
+export default DashboardBuilder;

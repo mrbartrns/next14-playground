@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import DashboardDataFetcher from '~/dashboard/components/DashboardDataFetcher';
+import DashboardBuilder from '~/dashboard/components/DashboardBuilder';
 
 const Page = () => {
   return (
     <div className={classNames('bg-[var(--gray-2)]', 'min-h-[1200px]')}>
-      <DashboardDataFetcher />
+      <DashboardBuilder />
     </div>
   );
 };

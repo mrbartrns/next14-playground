@@ -4,7 +4,6 @@ import type { LayoutData } from '~t/layout';
 const mockData: LayoutData = {
   '1': {
     id: '1',
-    type: '1',
     meta: {
       width: 3,
       height: 2,
@@ -14,7 +13,6 @@ const mockData: LayoutData = {
   },
   '2': {
     id: '2',
-    type: '2',
     meta: {
       width: 3,
       height: 2,
@@ -24,7 +22,6 @@ const mockData: LayoutData = {
   },
   '3': {
     id: '3',
-    type: '3',
     meta: {
       width: 3,
       height: 2,

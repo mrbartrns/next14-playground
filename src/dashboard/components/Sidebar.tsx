@@ -1,15 +1,22 @@
 import { Card, Strong, Text } from '@radix-ui/themes';
 import classNames from 'classnames';
+import type ReactGridLayout from 'react-grid-layout';
 import styled from 'styled-components';
+import type { ChartData } from '~t/chart';
+
+interface Props {
+  layout: ReactGridLayout.Layout[];
+  chartData: Record<string, ChartData>;
+}
 
 // 데이터를 사용자가 만든 차트 종류를 가져와야 함
 // 차트에 표현되는 데이터 테이블 종류와 관계 없이 불러올 수 있어야 함
-const Sidebar = () => {
+const Sidebar = ({ chartData, layout }: Props) => {
   return (
     <Container>
       <h2 className={classNames('font-bold', 'text-xl')}>요소 추가하기</h2>
       <div className={classNames('mt-4')}>
-        <Card className={classNames('card-container')}>
+        <Card className={classNames('sidebar-card')}>
           <Text as="div" className={classNames('text-md')}>
             <Strong>샘플 요소 1</Strong>
           </Text>
@@ -34,7 +41,7 @@ const Container = styled.div`
   border-left: 1px solid #e4e4e4;
 
   & {
-    .card-container {
+    .sidebar-card {
       margin-top: 16px;
       cursor: pointer;
       transition-property: color, background-color, border-color,

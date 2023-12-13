@@ -3,9 +3,11 @@ import classNames from 'classnames';
 import DashboardGrid from './DashboardGrid';
 import Sidebar from './Sidebar';
 import type ReactGridLayout from 'react-grid-layout';
+import type { ChartData } from '~t/chart';
 
 interface Props {
   layout: ReactGridLayout.Layout[];
+  chartData: Record<string, ChartData>;
   onLayoutChange?: (newLayout: ReactGridLayout.Layout[]) => void;
   onDiscardChanges?: () => void;
   onSaveChanges?: () => void;
@@ -13,6 +15,7 @@ interface Props {
 
 const Dashboard = ({
   layout,
+  chartData,
   onLayoutChange,
   onDiscardChanges,
   onSaveChanges,
@@ -34,7 +37,7 @@ const Dashboard = ({
 
   return (
     <div className={classNames('flex', 'relative', 'w-full')}>
-      <div className={classNames('w-full', 'mr-[25rem]')}>
+      <div className={classNames('w-full', { 'mr-[25rem]': isEditMode })}>
         <div
           className={classNames('flex', 'justify-between', 'bg-white', 'p-2')}
         >
@@ -110,13 +113,14 @@ const Dashboard = ({
         </div>
         <div className={classNames('mx-auto', 'ml-4', 'mt-2', 'mr-4')}>
           <DashboardGrid
+            chartData={chartData}
             isEditMode={isEditMode}
             layoutData={layout}
             onLayoutChange={onLayoutChange}
           />
         </div>
       </div>
-      <Sidebar />
+      {isEditMode && <Sidebar chartData={chartData} layout={layout} />}
     </div>
   );
 };
