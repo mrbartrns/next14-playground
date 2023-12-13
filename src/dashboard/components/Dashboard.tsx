@@ -32,83 +32,106 @@ const Dashboard = ({
   };
 
   return (
-    <div className={classNames('max-w-4xl', 'mx-auto')}>
-      <div className={classNames('flex', 'justify-between')}>
-        <button
-          type="button"
-          className={classNames(
-            'border',
-            'rounded-md',
-            {
-              [classNames('bg-emerald-100', 'hover:bg-emerald-200')]:
-                isEditMode,
-              [classNames('bg-red-100', 'hover:bg-red-200')]: !isEditMode,
-            },
-            'whitespace-nowrap',
-            'overflow-x-hidden',
-            'text-ellipsis',
-            'p-2'
-          )}
-          onClick={toggleEditMode}
-        >
-          EditMode: {isEditMode ? 'true' : 'false'}
-        </button>
-        <div className={classNames('flex', 'gap-4')}>
+    <div className={classNames('flex', 'relative', 'w-full')}>
+      <div
+        className={classNames(
+          'w-full',
+          'mx-auto',
+          'ml-4',
+          'mr-[432px]',
+          'mt-2'
+        )}
+      >
+        <div className={classNames('flex', 'justify-between')}>
           <button
-            disabled={!isEditMode}
             type="button"
             className={classNames(
               'border',
               'rounded-md',
-              'p-2',
-              'text-white',
-              'bg-[#ff4444]',
-              'hover:bg-[#cc0000]',
-              'disabled:text-neutral-500',
-              'disabled:bg-white',
-              'disabled:hover:bg-white',
-              'disabled:cursor-default',
+              {
+                [classNames('bg-emerald-100', 'hover:bg-emerald-200')]:
+                  isEditMode,
+                [classNames('bg-red-100', 'hover:bg-red-200')]: !isEditMode,
+              },
               'whitespace-nowrap',
               'overflow-x-hidden',
               'text-ellipsis',
-              'w-20',
-              'transition-colors'
+              'p-2'
             )}
-            onClick={isEditMode ? discardChanges : undefined}
+            onClick={toggleEditMode}
           >
-            discard
+            EditMode: {isEditMode ? 'true' : 'false'}
           </button>
-          <button
-            disabled={!isEditMode}
-            type="button"
-            className={classNames(
-              'border',
-              'rounded-md',
-              'p-2',
-              'text-white',
-              'bg-[#00c851]',
-              'hover:bg-[#007e33]',
-              'disabled:bg-white',
-              'disabled:hover:bg-white',
-              'disabled:text-neutral-500',
-              'disabled:cursor-default',
-              'whitespace-nowrap',
-              'overflow-x-hidden',
-              'text-ellipsis',
-              'w-20',
-              'transition-colors'
-            )}
-            onClick={isEditMode ? saveChanges : undefined}
-          >
-            save
-          </button>
+          <div className={classNames('flex', 'gap-4')}>
+            <button
+              disabled={!isEditMode}
+              type="button"
+              className={classNames(
+                'border',
+                'rounded-md',
+                'p-2',
+                'text-white',
+                'bg-[#ff4444]',
+                'hover:bg-[#cc0000]',
+                'disabled:text-neutral-500',
+                'disabled:bg-white',
+                'disabled:hover:bg-white',
+                'disabled:cursor-default',
+                'whitespace-nowrap',
+                'overflow-x-hidden',
+                'text-ellipsis',
+                'w-20',
+                'transition-colors'
+              )}
+              onClick={isEditMode ? discardChanges : undefined}
+            >
+              discard
+            </button>
+            <button
+              disabled={!isEditMode}
+              type="button"
+              className={classNames(
+                'border',
+                'rounded-md',
+                'p-2',
+                'text-white',
+                'bg-[#00c851]',
+                'hover:bg-[#007e33]',
+                'disabled:bg-white',
+                'disabled:hover:bg-white',
+                'disabled:text-neutral-500',
+                'disabled:cursor-default',
+                'whitespace-nowrap',
+                'overflow-x-hidden',
+                'text-ellipsis',
+                'w-20',
+                'transition-colors'
+              )}
+              onClick={isEditMode ? saveChanges : undefined}
+            >
+              save
+            </button>
+          </div>
         </div>
+        <DashboardGrid
+          isEditMode={isEditMode}
+          layoutData={layout}
+          onLayoutChange={onLayoutChange}
+        />
       </div>
-      <DashboardGrid
-        isEditMode={isEditMode}
-        layoutData={layout}
-        onLayoutChange={onLayoutChange}
-      />
+      <div
+        className={classNames(
+          'absolute',
+          'top-0',
+          'right-0',
+          'w-[400px]',
+          'shrink-0',
+          'min-h-[1200px]',
+          'bg-blue-50'
+        )}
+      >
+        Sidebar
+      </div>
     </div>
   );
 };
