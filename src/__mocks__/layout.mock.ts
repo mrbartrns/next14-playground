@@ -4,6 +4,7 @@ import type { Card } from '~t/layout';
 const mockData: Card[] = [
   {
     id: '1',
+    type: '1',
     meta: {
       width: 3,
       height: 2,
@@ -13,6 +14,7 @@ const mockData: Card[] = [
   },
   {
     id: '2',
+    type: '2',
     meta: {
       width: 3,
       height: 2,
@@ -22,6 +24,7 @@ const mockData: Card[] = [
   },
   {
     id: '3',
+    type: '3',
     meta: {
       width: 3,
       height: 2,

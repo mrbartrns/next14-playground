@@ -1,5 +1,6 @@
 export interface Card {
   id: string;
+  type: string;
   meta: CardMeta;
 }
 
