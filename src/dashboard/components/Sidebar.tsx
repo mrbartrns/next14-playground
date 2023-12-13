@@ -1,27 +1,37 @@
-import { Card, Strong, Text } from '@radix-ui/themes';
 import classNames from 'classnames';
 import type ReactGridLayout from 'react-grid-layout';
 import styled from 'styled-components';
+import { objectEntries } from '~/lib/object';
 import type { ChartData } from '~t/chart';
+import SidebarCard from './SidebarCard';
 
 interface Props {
   layout: ReactGridLayout.Layout[];
   chartData: Record<string, ChartData>;
+  onAddItem?: (chartId: string) => void;
 }
 
 // 데이터를 사용자가 만든 차트 종류를 가져와야 함
 // 차트에 표현되는 데이터 테이블 종류와 관계 없이 불러올 수 있어야 함
-const Sidebar = ({ chartData, layout }: Props) => {
+const Sidebar = ({ chartData, layout, onAddItem }: Props) => {
   return (
     <Container>
       <h2 className={classNames('font-bold', 'text-xl')}>요소 추가하기</h2>
       <div className={classNames('mt-4')}>
-        <Card className={classNames('sidebar-card')}>
-          <Text as="div" className={classNames('text-md')}>
-            <Strong>샘플 요소 1</Strong>
-          </Text>
-          <div className={classNames('mt-2')} />
-        </Card>
+        {objectEntries(chartData).map(([id, value]) => {
+          return (
+            <SidebarCard
+              key={id}
+              chartType={value.type}
+              dataset={value.dataset}
+              isAdded={!!layout.find((l) => l.i === id)}
+              title={value.displayName}
+              onClick={() => {
+                onAddItem?.(id);
+              }}
+            />
+          );
+        })}
       </div>
     </Container>
   );
