@@ -31,7 +31,7 @@ const SidebarCard = ({
           <Strong>{title}</Strong>
         </Text>
         <div className={classNames('added-indicator', { invisible: !isAdded })}>
-          added
+          Added
         </div>
       </div>
 

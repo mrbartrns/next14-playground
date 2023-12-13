@@ -40,82 +40,91 @@ const Dashboard = ({
   return (
     <div className={classNames('flex', 'relative', 'w-full')}>
       <div className={classNames('w-full', { 'mr-[25rem]': isEditMode })}>
-        <div
-          className={classNames('flex', 'justify-between', 'bg-white', 'p-2')}
-        >
-          <button
-            type="button"
-            className={classNames(
-              'border',
-              'rounded-md',
-              'font-medium',
-              {
-                [classNames('bg-emerald-100', 'hover:bg-emerald-200')]:
-                  isEditMode,
-                [classNames('bg-red-100', 'hover:bg-red-200')]: !isEditMode,
-              },
-              'whitespace-nowrap',
-              'overflow-x-hidden',
-              'text-ellipsis',
-              'p-2'
-            )}
-            onClick={toggleEditMode}
-          >
-            Edit
-          </button>
-          <div className={classNames('flex', 'gap-4')}>
+        <div className={classNames('flex', 'justify-end', 'bg-white', 'p-2')}>
+          {!isEditMode ? (
             <button
-              disabled={!isEditMode}
               type="button"
               className={classNames(
-                'border',
                 'rounded-md',
-                'font-medium',
-                'p-2',
-                'text-white',
-                'bg-[#ff4444]',
-                'hover:bg-[#cc0000]',
-                'disabled:text-neutral-500',
-                'disabled:bg-white',
-                'disabled:hover:bg-white',
-                'disabled:cursor-default',
+                'text-sm',
+                'font-[600]',
+                'text-[var(--blue-11)]',
+                'bg-[var(--blue-4)]',
+                'hover:text-[var(--blue-12)]',
+                'hover:bg-[var(--blue-6)]',
                 'whitespace-nowrap',
                 'overflow-x-hidden',
                 'text-ellipsis',
-                'w-20',
-                'transition-colors'
-              )}
-              onClick={isEditMode ? discardChanges : undefined}
-            >
-              discard
-            </button>
-            <button
-              disabled={!isEditMode}
-              type="button"
-              className={classNames(
-                'border',
-                'rounded-md',
-                'font-medium',
                 'p-2',
-                'text-white',
-                'bg-[#00c851]',
-                'hover:bg-[#007e33]',
-                'disabled:bg-white',
-                'disabled:hover:bg-white',
-                'disabled:text-neutral-500',
-                'disabled:cursor-default',
-                'whitespace-nowrap',
-                'overflow-x-hidden',
-                'text-ellipsis',
-                'w-20',
+                'uppercase',
                 'transition-colors'
               )}
-              onClick={isEditMode ? saveChanges : undefined}
+              onClick={toggleEditMode}
             >
-              save
+              Edit dashboard
             </button>
-          </div>
+          ) : (
+            <div className={classNames('flex', 'gap-4')}>
+              <button
+                disabled={!isEditMode}
+                type="button"
+                className={classNames(
+                  'rounded-md',
+                  'font-[600]',
+                  'text-sm',
+                  'p-2',
+                  'shadow-sm',
+                  'text-[var(--blue-11)]',
+                  'bg-[var(--blue-4)]',
+                  'hover:text-[var(--blue-12)]',
+                  'hover:bg-[var(--blue-6)]',
+                  'disabled:text-neutral-500',
+                  'disabled:bg-white',
+                  'disabled:hover:bg-white',
+                  'disabled:cursor-default',
+                  'whitespace-nowrap',
+                  'overflow-x-hidden',
+                  'text-ellipsis',
+                  'w-20',
+                  'transition-colors',
+                  'uppercase'
+                )}
+                onClick={isEditMode ? discardChanges : undefined}
+              >
+                discard
+              </button>
+              <button
+                disabled={!isEditMode}
+                type="button"
+                className={classNames(
+                  'rounded-md',
+                  'font-[600]',
+                  'text-sm',
+                  'p-2',
+                  'text-[var(--green-11)]',
+                  'hover:text-[var(--green-12)]',
+                  'shadow-sm',
+                  'bg-[var(--green-4)]',
+                  'hover:bg-[var(--green-6)]',
+                  'disabled:bg-white',
+                  'disabled:hover:bg-white',
+                  'disabled:text-neutral-500',
+                  'disabled:cursor-default',
+                  'whitespace-nowrap',
+                  'overflow-x-hidden',
+                  'text-ellipsis',
+                  'w-20',
+                  'transition-colors',
+                  'uppercase'
+                )}
+                onClick={isEditMode ? saveChanges : undefined}
+              >
+                save
+              </button>
+            </div>
+          )}
         </div>
+
         <div className={classNames('mx-auto', 'ml-4', 'mt-2', 'mr-4')}>
           <DashboardGrid
             chartData={chartData}
