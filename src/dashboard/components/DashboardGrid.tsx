@@ -14,7 +14,7 @@ interface Props {
   onSaveChanges?: () => void;
 }
 
-const Layout = ({
+const DashboardGrid = ({
   layoutData: layout,
   onLayoutChange,
   onDiscardChanges,
@@ -155,7 +155,7 @@ const Layout = ({
   );
 };
 
-export default Layout;
+export default DashboardGrid;
 
 const Container = styled.div`
   & {

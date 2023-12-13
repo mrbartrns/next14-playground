@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import GridDataFetcher from '~/dashboard/components/GridDataFetcher';
+import DashboardDataFetcher from '~/dashboard/components/DashboardDataFetcher';
 
 const Page = () => {
   return (
     <div className={classNames('max-w-4xl', 'mx-auto', 'mt-2')}>
-      <GridDataFetcher />
+      <DashboardDataFetcher />
     </div>
   );
 };

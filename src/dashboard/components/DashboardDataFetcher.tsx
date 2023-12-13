@@ -5,7 +5,7 @@ import mockData from '~/__mocks__/layout.mock';
 import { objectEntries } from '~/lib/object';
 import storage from '~/lib/storage';
 import { DASHBOARD_LAYOUT_STORAGE_KEY } from '../constants';
-import Grid from './Grid';
+import Grid from './DashboardGrid';
 import type ReactGridLayout from 'react-grid-layout';
 import type { LayoutData } from '~t/layout';
 
@@ -38,7 +38,7 @@ function isValidLayoutData(data: any): data is LayoutData {
   }
 }
 
-const GridDataFetcher = () => {
+const DashboardDataFetcher = () => {
   const [layoutData, setLayoutData] = useState<LayoutData>({});
 
   const layout: ReactGridLayout.Layout[] = useMemo(() => {
@@ -114,4 +114,4 @@ const GridDataFetcher = () => {
   );
 };
 
-export default GridDataFetcher;
+export default DashboardDataFetcher;
