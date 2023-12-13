@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { ParentSize } from '@visx/responsive';
 import classNames from 'classnames';
 import GridLayout from 'react-grid-layout';
@@ -9,36 +9,15 @@ import ChartWrapper from './charts/ChartWrapper';
 
 interface Props {
   layoutData: GridLayout.Layout[];
+  isEditMode: boolean;
   onLayoutChange?: (newLayout: GridLayout.Layout[]) => void;
-  onDiscardChanges?: () => void;
-  onSaveChanges?: () => void;
 }
 
 const DashboardGrid = ({
   layoutData: layout,
+  isEditMode,
   onLayoutChange,
-  onDiscardChanges,
-  onSaveChanges,
 }: Props) => {
-  const [isEditMode, setIsEditMode] = useState(false);
-
-  const discardChanges = useCallback(() => {
-    onDiscardChanges?.();
-  }, [onDiscardChanges]);
-
-  const saveChanges = useCallback(() => {
-    setIsEditMode(false);
-    onSaveChanges?.();
-  }, [onSaveChanges]);
-
-  const handleLayoutChange = (newLayout: ReactGridLayout.Layout[]) => {
-    onLayoutChange?.(newLayout);
-  };
-
-  const toggleEditMode = () => {
-    setIsEditMode((prev) => !prev);
-  };
-
   // prevent performance issue
   // 여기에 type에 대한 정보도 우선 넣기,, 임시
   const children = useMemo(
@@ -56,101 +35,28 @@ const DashboardGrid = ({
   );
 
   return (
-    <div className={classNames('max-w-4xl', 'mx-auto')}>
-      <div className={classNames('flex', 'justify-between')}>
-        <button
-          type="button"
-          className={classNames(
-            'border',
-            'rounded-md',
-            {
-              [classNames('bg-emerald-100', 'hover:bg-emerald-200')]:
-                isEditMode,
-              [classNames('bg-red-100', 'hover:bg-red-200')]: !isEditMode,
-            },
-            'whitespace-nowrap',
-            'overflow-x-hidden',
-            'text-ellipsis',
-            'p-2'
-          )}
-          onClick={toggleEditMode}
-        >
-          EditMode: {isEditMode ? 'true' : 'false'}
-        </button>
-        <div className={classNames('flex', 'gap-4')}>
-          <button
-            disabled={!isEditMode}
-            type="button"
-            className={classNames(
-              'border',
-              'rounded-md',
-              'p-2',
-              'text-white',
-              'bg-[#ff4444]',
-              'hover:bg-[#cc0000]',
-              'disabled:text-neutral-500',
-              'disabled:bg-white',
-              'disabled:hover:bg-white',
-              'disabled:cursor-default',
-              'whitespace-nowrap',
-              'overflow-x-hidden',
-              'text-ellipsis',
-              'w-20',
-              'transition-colors'
-            )}
-            onClick={isEditMode ? discardChanges : undefined}
-          >
-            discard
-          </button>
-          <button
-            disabled={!isEditMode}
-            type="button"
-            className={classNames(
-              'border',
-              'rounded-md',
-              'p-2',
-              'text-white',
-              'bg-[#00c851]',
-              'hover:bg-[#007e33]',
-              'disabled:bg-white',
-              'disabled:hover:bg-white',
-              'disabled:text-neutral-500',
-              'disabled:cursor-default',
-              'whitespace-nowrap',
-              'overflow-x-hidden',
-              'text-ellipsis',
-              'w-20',
-              'transition-colors'
-            )}
-            onClick={isEditMode ? saveChanges : undefined}
-          >
-            save
-          </button>
-        </div>
-      </div>
-      <div className={classNames('mt-4')}>
-        <Container>
-          <ParentSize debounceTime={100}>
-            {({ width }) => {
-              return width === 0 ? null : (
-                <GridLayout
-                  className="layout"
-                  cols={DASHABORD_GRID_COLUMN}
-                  containerPadding={[0, 0]}
-                  isDraggable={isEditMode}
-                  isResizable={isEditMode}
-                  layout={layout}
-                  margin={[10, 10]}
-                  width={width}
-                  onLayoutChange={handleLayoutChange}
-                >
-                  {children}
-                </GridLayout>
-              );
-            }}
-          </ParentSize>
-        </Container>
-      </div>
+    <div className={classNames('mt-4')}>
+      <Container>
+        <ParentSize debounceTime={100}>
+          {({ width }) => {
+            return width === 0 ? null : (
+              <GridLayout
+                className="layout"
+                cols={DASHABORD_GRID_COLUMN}
+                containerPadding={[0, 0]}
+                isDraggable={isEditMode}
+                isResizable={isEditMode}
+                layout={layout}
+                margin={[10, 10]}
+                width={width}
+                onLayoutChange={onLayoutChange}
+              >
+                {children}
+              </GridLayout>
+            );
+          }}
+        </ParentSize>
+      </Container>
     </div>
   );
 };

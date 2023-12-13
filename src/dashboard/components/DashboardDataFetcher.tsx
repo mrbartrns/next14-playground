@@ -5,7 +5,7 @@ import mockData from '~/__mocks__/layout.mock';
 import { objectEntries } from '~/lib/object';
 import storage from '~/lib/storage';
 import { DASHBOARD_LAYOUT_STORAGE_KEY } from '../constants';
-import Grid from './DashboardGrid';
+import Dashboard from './Dashboard';
 import type ReactGridLayout from 'react-grid-layout';
 import type { LayoutData } from '~t/layout';
 
@@ -100,13 +100,9 @@ const DashboardDataFetcher = () => {
     initialize();
   }, [initialize]);
 
-  useEffect(() => {
-    console.log(layout);
-  }, [layout]);
-
   return (
-    <Grid
-      layoutData={layout}
+    <Dashboard
+      layout={layout}
       onDiscardChanges={handleDiscardChanges}
       onLayoutChange={handleLayoutChange}
       onSaveChanges={handleSaveChanges}
