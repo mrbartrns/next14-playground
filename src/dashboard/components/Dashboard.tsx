@@ -11,6 +11,7 @@ interface Props {
   onLayoutChange?: (newLayout: ReactGridLayout.Layout[]) => void;
   onDiscardChanges?: () => void;
   onSaveChanges?: () => void;
+  onAddItem?: (chartId: string) => void;
 }
 
 const Dashboard = ({
@@ -19,6 +20,7 @@ const Dashboard = ({
   onLayoutChange,
   onDiscardChanges,
   onSaveChanges,
+  onAddItem,
 }: Props) => {
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -46,6 +48,7 @@ const Dashboard = ({
             className={classNames(
               'border',
               'rounded-md',
+              'font-medium',
               {
                 [classNames('bg-emerald-100', 'hover:bg-emerald-200')]:
                   isEditMode,
@@ -58,7 +61,7 @@ const Dashboard = ({
             )}
             onClick={toggleEditMode}
           >
-            EditMode: {isEditMode ? 'true' : 'false'}
+            Edit
           </button>
           <div className={classNames('flex', 'gap-4')}>
             <button
@@ -67,6 +70,7 @@ const Dashboard = ({
               className={classNames(
                 'border',
                 'rounded-md',
+                'font-medium',
                 'p-2',
                 'text-white',
                 'bg-[#ff4444]',
@@ -91,6 +95,7 @@ const Dashboard = ({
               className={classNames(
                 'border',
                 'rounded-md',
+                'font-medium',
                 'p-2',
                 'text-white',
                 'bg-[#00c851]',
@@ -120,7 +125,9 @@ const Dashboard = ({
           />
         </div>
       </div>
-      {isEditMode && <Sidebar chartData={chartData} layout={layout} />}
+      {isEditMode && (
+        <Sidebar chartData={chartData} layout={layout} onAddItem={onAddItem} />
+      )}
     </div>
   );
 };

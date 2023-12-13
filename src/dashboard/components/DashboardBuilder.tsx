@@ -95,6 +95,26 @@ const DashboardBuilder = () => {
     []
   );
 
+  const handleAddItem = useCallback((chartId: string) => {
+    setLayoutData(
+      produce((draft) => {
+        if (draft[chartId]) return draft;
+
+        draft[chartId] = {
+          id: chartId,
+          meta: {
+            width: 2,
+            height: 2,
+            startX: 0,
+            startY: Infinity, // 가장 아래쪽에 추가할 수 있음
+          },
+        };
+
+        return draft;
+      })
+    );
+  }, []);
+
   useEffect(() => {
     initialize();
   }, [initialize]);
@@ -103,6 +123,7 @@ const DashboardBuilder = () => {
     <Dashboard
       chartData={chartData}
       layout={layout}
+      onAddItem={handleAddItem}
       onDiscardChanges={handleDiscardChanges}
       onLayoutChange={handleLayoutChange}
       onSaveChanges={handleSaveChanges}

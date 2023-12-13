@@ -9,6 +9,8 @@ interface Props {
   onClick?: () => void;
 }
 
+const noop = () => {};
+
 const SidebarCard = ({
   title,
   dataset,
@@ -17,22 +19,38 @@ const SidebarCard = ({
   onClick,
 }: Props) => {
   return (
-    <Card className={classNames('sidebar-card')} onClick={onClick}>
-      <div className={classNames('flex', 'justify-between')}>
-        <Text as="div" className={classNames('text-md')}>
+    <Card
+      className={classNames('sidebar-card', {
+        'sidebar-card__default': !isAdded,
+        'sidebar-card__added': isAdded,
+      })}
+      onClick={isAdded ? noop : onClick}
+    >
+      <div className={classNames('flex', 'justify-between', 'items-center')}>
+        <Text as="div" className={classNames('title')}>
           <Strong>{title}</Strong>
         </Text>
-        <div>{isAdded ? 'added' : ''}</div>
+        <div className={classNames('added-indicator', { invisible: !isAdded })}>
+          added
+        </div>
       </div>
 
-      <div className={classNames('mt-2')}>
+      <div className={classNames('mt-2', 'card-body')}>
         <div className={classNames('flex', 'justify-between')}>
-          <Text as="div">dataset</Text>
-          <Text as="div">{dataset}</Text>
+          <Text as="div" className={classNames('card-body__left')}>
+            Dataset
+          </Text>
+          <Text as="div" className={classNames('card-body__right')}>
+            {dataset}
+          </Text>
         </div>
         <div className={classNames('flex', 'justify-between')}>
-          <Text as="div">type</Text>
-          <Text as="div">{chartType}</Text>
+          <Text as="div" className={classNames('card-body__left')}>
+            Type
+          </Text>
+          <Text as="div" className={classNames('card-body__right')}>
+            {chartType}
+          </Text>
         </div>
       </div>
     </Card>

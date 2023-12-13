@@ -53,18 +53,55 @@ const Container = styled.div`
   & {
     .sidebar-card {
       margin-top: 16px;
-      cursor: pointer;
       transition-property: color, background-color, border-color,
         text-decoration-color, fill, stroke;
       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       transition-duration: 150ms;
+      user-select: none;
 
       &:first-of-type {
         margin-top: 0;
       }
 
-      &:hover {
-        background-color: var(--gray-2);
+      .title {
+        font-size: 1.15rem;
+      }
+
+      .card-body {
+        font-size: 0.86rem;
+
+        .card-body__left {
+          color: var(--gray-10);
+        }
+
+        .card-body__right {
+          color: var(--gray-11);
+        }
+      }
+
+      .added-indicator {
+        padding: 0.125rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.86rem;
+        font-weight: 500;
+        background-color: rgb(244, 251, 246);
+        color: rgb(33, 131, 88);
+        box-shadow: rgb(142, 206, 170) 0px 0px 0px 1px inset;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &__default {
+        cursor: pointer;
+        &:hover {
+          background-color: var(--gray-2);
+        }
+      }
+
+      &__added {
+        cursor: default;
+        color: var(--gray-9);
       }
     }
   }
