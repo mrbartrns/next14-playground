@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import classNames from 'classnames';
 import DashboardGrid from './DashboardGrid';
+import Sidebar from './Sidebar';
 import type ReactGridLayout from 'react-grid-layout';
 
 interface Props {
@@ -119,19 +120,7 @@ const Dashboard = ({
           onLayoutChange={onLayoutChange}
         />
       </div>
-      <div
-        className={classNames(
-          'absolute',
-          'top-0',
-          'right-0',
-          'w-[400px]',
-          'shrink-0',
-          'min-h-[1200px]',
-          'bg-blue-50'
-        )}
-      >
-        Sidebar
-      </div>
+      <Sidebar />
     </div>
   );
 };

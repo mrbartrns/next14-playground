@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/themes": "^2.0.2",
     "@react-spring/web": "^9.7.3",
     "@visx/axis": "^3.5.0",
     "@visx/gradient": "^3.3.0",

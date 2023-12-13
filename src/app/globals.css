@@ -5,3 +5,9 @@
 html {
   font-family: Pretendard, sans-serif;
 }
+
+@media (max-width: 1599px) {
+  html {
+    font-size: 14px;
+  }
+}
