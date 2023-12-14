@@ -12,9 +12,9 @@ interface Props {
 
 const componentLookup: Record<string, (...args: any[]) => JSX.Element | null> =
   {
-    '1': BarChart,
-    '2': BarGroupChart,
-    '3': PieChart,
+    bar: BarChart,
+    barGroup: BarGroupChart,
+    dounut: PieChart,
   };
 
 const ChartComponent = ({ id, ...rest }: Props) => {

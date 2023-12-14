@@ -1,4 +1,8 @@
-import './globals.css';
+import { Theme } from '@radix-ui/themes';
+import StyledComponentsRegistry from '~/lib/registry/styled-components';
+import '@radix-ui/themes/styles.css';
+import './globals.scss';
+
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -13,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <head>
         <link
           as="style"
@@ -22,7 +26,11 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <Theme>
+          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        </Theme>
+      </body>
     </html>
   );
 }

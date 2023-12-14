@@ -1,8 +1,8 @@
-import type { Card } from '~t/layout';
+import type { LayoutData } from '~t/layout';
 
 // width, height, startY, startX의 범위는 0부터 12까지
-const mockData: Card[] = [
-  {
+const mockData: LayoutData = {
+  '1': {
     id: '1',
     meta: {
       width: 3,
@@ -11,7 +11,7 @@ const mockData: Card[] = [
       startX: 0,
     },
   },
-  {
+  '2': {
     id: '2',
     meta: {
       width: 3,
@@ -20,7 +20,7 @@ const mockData: Card[] = [
       startX: 0,
     },
   },
-  {
+  '3': {
     id: '3',
     meta: {
       width: 3,
@@ -29,6 +29,6 @@ const mockData: Card[] = [
       startX: 0,
     },
   },
-];
+};
 
 export default mockData;

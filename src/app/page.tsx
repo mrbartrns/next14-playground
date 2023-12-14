@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import GridLayout from '~/dashboard/components/Grid';
+import DashboardBuilder from '~/dashboard/components/DashboardBuilder';
 
 const Page = () => {
   return (
-    <div className={classNames('max-w-4xl', 'mx-auto', 'mt-2')}>
-      <GridLayout />
+    <div className={classNames('bg-[var(--gray-2)]', 'min-h-[1200px]')}>
+      <DashboardBuilder />
     </div>
   );
 };

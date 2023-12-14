@@ -1,3 +1,5 @@
+export type LayoutData = Record<string, Card>;
+
 export interface Card {
   id: string;
   meta: CardMeta;
@@ -8,9 +10,4 @@ export interface CardMeta {
   height: number;
   startY: number;
   startX: number;
-}
-
-export interface ChartData {
-  id: string;
-  type: 'bar' | 'dounut';
 }
