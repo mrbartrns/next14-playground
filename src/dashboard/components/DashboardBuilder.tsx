@@ -1,6 +1,6 @@
 // layout data, chart data는 서버에서 fetch할 예정
 'use client';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { produce } from 'immer';
 import mockData from '~/__mocks__/layout.mock';
 import chartData from '~/__mocks__/chartData.mock';
@@ -10,6 +10,7 @@ import { DASHBOARD_LAYOUT_STORAGE_KEY } from '../constants';
 import Dashboard from './Dashboard';
 import type ReactGridLayout from 'react-grid-layout';
 import type { LayoutData } from '~t/layout';
+import { dashboardCardFactory } from '../dashcardFactory';
 
 // NOTE - data schema 변경 뒤 해당 함수 로직 변경 확인
 function isValidLayoutData(data: any): data is LayoutData {
@@ -40,24 +41,11 @@ function isValidLayoutData(data: any): data is LayoutData {
 const DashboardBuilder = () => {
   const [layoutData, setLayoutData] = useState<LayoutData>({});
 
-  const layout: ReactGridLayout.Layout[] = useMemo(() => {
-    return objectEntries(layoutData).map(([, value]) => ({
-      i: value.id,
-      x: value.meta.startX,
-      y: value.meta.startY,
-      w: value.meta.width,
-      h: value.meta.height,
-    }));
-  }, [layoutData]);
-
   const initialize = useCallback(() => {
     const _layoutData = storage.getItem(DASHBOARD_LAYOUT_STORAGE_KEY);
     if (isValidLayoutData(_layoutData)) {
       setLayoutData(_layoutData);
-      return;
     }
-
-    setLayoutData(mockData);
   }, []);
 
   const handleDiscardChanges = useCallback(() => {
@@ -95,20 +83,16 @@ const DashboardBuilder = () => {
     []
   );
 
-  const handleAddItem = useCallback((chartId: string) => {
+  const handleAddItem = useCallback((sliceId: string) => {
     setLayoutData(
       produce((draft) => {
-        if (draft[chartId]) return draft;
+        if (draft[sliceId]) return draft;
 
-        draft[chartId] = {
-          id: chartId,
-          meta: {
-            width: 2,
-            height: 2,
-            startX: 0,
-            startY: Infinity, // 가장 아래쪽에 추가할 수 있음
-          },
-        };
+        const newDashcard = dashboardCardFactory({
+          sliceId,
+        });
+
+        draft[newDashcard.id] = newDashcard;
 
         return draft;
       })
@@ -132,7 +116,7 @@ const DashboardBuilder = () => {
   return (
     <Dashboard
       chartData={chartData}
-      layout={layout}
+      layout={layoutData}
       onAddItem={handleAddItem}
       onDiscardChanges={handleDiscardChanges}
       onLayoutChange={handleLayoutChange}

@@ -4,9 +4,10 @@ import DashboardGrid from './DashboardGrid';
 import Sidebar from './Sidebar';
 import type ReactGridLayout from 'react-grid-layout';
 import type { ChartData } from '~t/chart';
+import type { LayoutData } from '~t/layout';
 
 interface Props {
-  layout: ReactGridLayout.Layout[];
+  layout: LayoutData;
   chartData: Record<string, ChartData>;
   onLayoutChange?: (newLayout: ReactGridLayout.Layout[]) => void;
   onDiscardChanges?: () => void;

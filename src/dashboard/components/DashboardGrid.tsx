@@ -7,10 +7,12 @@ import { styled } from 'styled-components';
 import { DASHABORD_GRID_COLUMN, GRID_CARD_BORDER_RADIUS } from '../constants';
 import type { ChartData } from '~t/chart';
 import DashboardCard from './DashboardCard';
+import type { LayoutData } from '~t/layout';
+import { objectEntries } from '~/lib/object';
 
 interface Props {
   chartData: Record<string, ChartData>;
-  layoutData: GridLayout.Layout[];
+  layoutData: LayoutData;
   isEditMode: boolean;
   onLayoutChange?: (newLayout: GridLayout.Layout[]) => void;
   onRemove?: (id: string) => void;
@@ -18,12 +20,22 @@ interface Props {
 
 const DashboardGrid = ({
   chartData,
-  layoutData: layout,
+  layoutData,
   isEditMode,
   onLayoutChange,
   onRemove,
 }: Props) => {
   const [isDragging, setIsDragging] = useState(false);
+
+  const layout: ReactGridLayout.Layout[] = useMemo(() => {
+    return objectEntries(layoutData).map(([, value]) => ({
+      i: value.id,
+      x: value.meta.startX,
+      y: value.meta.startY,
+      w: value.meta.width,
+      h: value.meta.height,
+    }));
+  }, [layoutData]);
 
   // prevent performance issue
   // 여기에 type에 대한 정보도 우선 넣기,, 임시
@@ -37,7 +49,7 @@ const DashboardGrid = ({
           })}
         >
           <DashboardCard
-            chartData={chartData[layoutItem.i]}
+            chartData={chartData[layoutData[layoutItem.i].sliceId]}
             isEditMode={isEditMode}
             onRemove={() => {
               onRemove?.(layoutItem.i);
@@ -45,7 +57,7 @@ const DashboardGrid = ({
           />
         </div>
       )),
-    [chartData, isEditMode, layout, onRemove]
+    [chartData, isEditMode, layout, layoutData, onRemove]
   );
 
   return (

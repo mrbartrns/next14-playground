@@ -1,14 +1,22 @@
 // 클라이언트에서 사용할 layout card factory
 import { nanoid } from 'nanoid';
-import type ReactGridLayout from 'react-grid-layout';
+import type { Card } from '~t/layout';
 
-export const dashcardFactory = (
-  item: Pick<ReactGridLayout.Layout, 'w' | 'h' | 'x' | 'y'>
-): ReactGridLayout.Layout => {
+type Options = Pick<Card, 'sliceId'> & Partial<Pick<Card, 'meta'>>;
+
+export const dashboardCardFactory = (options: Options): Card => {
   const id = nanoid();
 
   return {
-    i: id,
-    ...item,
+    id,
+    sliceId: options.sliceId,
+    meta: options.meta
+      ? { ...options.meta }
+      : {
+          startX: 0,
+          startY: Infinity,
+          width: 2,
+          height: 2,
+        },
   };
 };
