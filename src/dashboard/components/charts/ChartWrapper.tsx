@@ -16,7 +16,12 @@ const ChartWrapper = ({ chartId, isEditing, borderRadius }: Props) => {
       <ParentSize>
         {({ width, height }) => {
           return (
-            <div className={classNames({ 'pointer-events-none': isEditing })}>
+            <div
+              className={classNames({
+                'pointer-events-none': isEditing,
+                'select-none': isEditing,
+              })}
+            >
               <ChartComponent
                 borderRadius={borderRadius}
                 height={height}
