@@ -115,6 +115,16 @@ const DashboardBuilder = () => {
     );
   }, []);
 
+  const handleRemove = useCallback((id: string) => {
+    setLayoutData(
+      produce((draft) => {
+        if (draft[id]) {
+          delete draft[id];
+        }
+      })
+    );
+  }, []);
+
   useEffect(() => {
     initialize();
   }, [initialize]);
@@ -126,6 +136,7 @@ const DashboardBuilder = () => {
       onAddItem={handleAddItem}
       onDiscardChanges={handleDiscardChanges}
       onLayoutChange={handleLayoutChange}
+      onRemove={handleRemove}
       onSaveChanges={handleSaveChanges}
     />
   );

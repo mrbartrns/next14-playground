@@ -1,6 +1,8 @@
 import { ParentSize } from '@visx/responsive';
 import classNames from 'classnames';
 import ChartComponent from './ChartComponent';
+import { styled } from 'styled-components';
+import { GRID_CARD_BORDER_RADIUS } from '~/dashboard/constants';
 
 interface Props {
   borderRadius?: number;
@@ -10,26 +12,35 @@ interface Props {
 
 const ChartWrapper = ({ chartId, isEditing, borderRadius }: Props) => {
   return (
-    <ParentSize>
-      {({ width, height }) => {
-        return (
-          <div
-            className={classNames(
-              { 'pointer-events-none': isEditing },
-              'overflow-hidden'
-            )}
-          >
-            <ChartComponent
-              borderRadius={borderRadius}
-              height={height}
-              id={chartId}
-              width={width}
-            />
-          </div>
-        );
-      }}
-    </ParentSize>
+    <Container>
+      <ParentSize>
+        {({ width, height }) => {
+          return (
+            <div
+              className={classNames(
+                { 'pointer-events-none': isEditing },
+                'overflow-hidden'
+              )}
+            >
+              <ChartComponent
+                borderRadius={borderRadius}
+                height={height}
+                id={chartId}
+                width={width}
+              />
+            </div>
+          );
+        }}
+      </ParentSize>
+    </Container>
   );
 };
 
 export default ChartWrapper;
+
+const Container = styled.div`
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  border-radius: ${GRID_CARD_BORDER_RADIUS}px;
+`;

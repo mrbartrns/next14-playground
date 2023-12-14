@@ -12,6 +12,7 @@ interface Props {
   onDiscardChanges?: () => void;
   onSaveChanges?: () => void;
   onAddItem?: (chartId: string) => void;
+  onRemove?: (chartId: string) => void;
 }
 
 const Dashboard = ({
@@ -21,6 +22,7 @@ const Dashboard = ({
   onDiscardChanges,
   onSaveChanges,
   onAddItem,
+  onRemove,
 }: Props) => {
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -131,6 +133,7 @@ const Dashboard = ({
             isEditMode={isEditMode}
             layoutData={layout}
             onLayoutChange={onLayoutChange}
+            onRemove={onRemove}
           />
         </div>
       </div>

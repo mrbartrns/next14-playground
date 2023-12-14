@@ -1,18 +1,19 @@
 'use client';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { ParentSize } from '@visx/responsive';
 import classNames from 'classnames';
 import GridLayout from 'react-grid-layout';
 import { styled } from 'styled-components';
 import { DASHABORD_GRID_COLUMN, GRID_CARD_BORDER_RADIUS } from '../constants';
-import ChartWrapper from './charts/ChartWrapper';
 import type { ChartData } from '~t/chart';
+import DashboardCard from './DashboardCard';
 
 interface Props {
   chartData: Record<string, ChartData>;
   layoutData: GridLayout.Layout[];
   isEditMode: boolean;
   onLayoutChange?: (newLayout: GridLayout.Layout[]) => void;
+  onRemove?: (id: string) => void;
 }
 
 const DashboardGrid = ({
@@ -20,21 +21,31 @@ const DashboardGrid = ({
   layoutData: layout,
   isEditMode,
   onLayoutChange,
+  onRemove,
 }: Props) => {
+  const [isDragging, setIsDragging] = useState(false);
+
   // prevent performance issue
   // 여기에 type에 대한 정보도 우선 넣기,, 임시
   const children = useMemo(
     () =>
       layout?.map((layoutItem) => (
-        <div key={layoutItem.i} className={classNames('card')}>
-          <ChartWrapper
-            borderRadius={GRID_CARD_BORDER_RADIUS}
-            chartId={chartData[layoutItem.i].type}
-            isEditing={isEditMode}
+        <div
+          key={layoutItem.i}
+          className={classNames('card', {
+            card__editing: isEditMode,
+          })}
+        >
+          <DashboardCard
+            chartData={chartData[layoutItem.i]}
+            isEditMode={isEditMode}
+            onRemove={() => {
+              onRemove?.(layoutItem.i);
+            }}
           />
         </div>
       )),
-    [chartData, isEditMode, layout]
+    [chartData, isEditMode, layout, onRemove]
   );
 
   return (
@@ -44,7 +55,6 @@ const DashboardGrid = ({
           {({ width }) => {
             return width === 0 ? null : (
               <GridLayout
-                className="layout"
                 cols={DASHABORD_GRID_COLUMN}
                 containerPadding={[0, 0]}
                 isDraggable={isEditMode}
@@ -52,7 +62,16 @@ const DashboardGrid = ({
                 layout={layout}
                 margin={[10, 10]}
                 width={width}
+                className={classNames('layout', {
+                  layout__dragging: isDragging,
+                })}
                 onLayoutChange={onLayoutChange}
+                onDrag={() => {
+                  setIsDragging(true);
+                }}
+                onDragStop={() => {
+                  setIsDragging(false);
+                }}
               >
                 {children}
               </GridLayout>
@@ -74,12 +93,18 @@ const Container = styled.div`
     }
 
     .card {
+      position: relative;
       background-color: #ffffff;
       border: 1px solid #e4e4e4;
       box-shadow: rgba(0, 0, 0, 0.13) 0px 1px 3px;
       border-radius: ${GRID_CARD_BORDER_RADIUS}px;
       z-index: 1;
-      overflow: hidden;
+
+      &.card__editing {
+        &:hover {
+          z-index: 3;
+        }
+      }
     }
 
     .react-grid-item {
